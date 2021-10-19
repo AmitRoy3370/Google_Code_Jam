@@ -1,0 +1,70 @@
+import java.util.Scanner;
+
+public class Solution{
+    
+    static int testCases,n,p,k;
+    
+    static long cost[][],dp[][],sum[][];
+    
+    static Scanner in=new Scanner(System.in);
+    
+    static void solve(int testCases)
+    {
+        
+        for(int i=1;i<=n;i++){
+            
+            for(int j=0;j<=p;j++){
+                
+                dp[i][j]=0;
+                
+                int nextN=Math.min(j,k);
+                
+                for(int x=0;x<=nextN;x++){
+                    
+                    dp[i][j]=Math.max( dp[i][j],sum[i][x]+dp[i-1][j-x] );
+                    
+                }
+                
+            }
+            
+        }
+        
+        System.out.println("Case #"+testCases+": "+dp[n][p]);
+        
+    }
+    
+    public static void main(String [] amit){
+        
+        testCases=in.nextInt();
+        
+        for(int t=1;t<=testCases;t++){
+            
+            n=in.nextInt();
+            k=in.nextInt();
+            p=in.nextInt();
+            
+            cost=new long[n+1][k+1];
+            
+            sum=new long[n+1][k+1];
+            
+            dp=new long[n+1][p+1];
+            
+            for(int i=1;i<=n;i++){
+                
+                for(int j=1;j<=k;j++){
+                    
+                    cost[i][j]=in.nextInt();
+                    
+                    sum[i][j]=sum[i][j-1]+cost[i][j];
+                    
+                }
+                
+            }
+            
+            solve(t);
+            
+        }
+        
+    }
+    
+}
