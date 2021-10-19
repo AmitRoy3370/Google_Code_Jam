@@ -1,0 +1,64 @@
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class Solution{
+    
+    static Scanner in=new Scanner(System.in);
+    
+    static int testCases,n;
+    
+    static long a[];
+    
+    static long totalCost=0;
+    
+    static void solve(int testCases){
+        
+        Arrays.sort(a);
+        
+        int i=0;
+        
+        long sum=0;
+        
+        while(i<n && sum<=totalCost ){
+            
+            sum+=a[i];
+            
+            if( sum>totalCost ){
+                
+                break;
+                
+            }
+            
+            i++;
+            
+        }
+        
+        System.out.println("Case #"+testCases+": "+i);
+        
+    }
+    
+    public static void main(String [] amit){
+        
+        testCases=in.nextInt();
+        
+        for(int t=1;t<=testCases;t++){
+            
+            n=in.nextInt();
+            
+            totalCost=in.nextLong();
+            
+            a=new long[n];
+            
+            for(int i=0;i<n;i++){
+                
+                a[i]=in.nextLong();
+                
+            }
+            
+            solve(t);
+            
+        }
+        
+    }
+    
+}
