@@ -1,0 +1,80 @@
+import java.util.Scanner;
+
+public class Solution{
+    
+    static int testCases,n;
+    
+    static char a[];
+    
+    static Scanner in=new Scanner(System.in);
+    
+    static void solve(int testCases){
+        
+        System.out.print("Case #"+testCases+": ");
+        
+        int counter[]=new int[n];
+        
+     counter[0]=1;
+     
+     for(int i=1;i<n;i++){
+         
+         if(a[i]>a[i-1]){
+             
+             counter[i]=counter[i-1]+1;
+             
+         }else{
+             
+             counter[i]=1;
+             
+         }
+         
+     }
+        
+        for(int i: counter){
+            
+            System.out.print(i+" ");
+            
+        }
+        
+        System.out.println();
+        
+    }
+    
+    public static void main(String [] amit)
+    {
+        
+        testCases=in.nextInt();
+        
+        for(int t=1;t<=testCases;t++){
+            
+            n=in.nextInt();
+            
+            a=in.next().toCharArray();
+            
+            solve(t);
+            
+        }
+        
+    }
+    
+}
+
+/*
+
+2
+4
+ABBC
+6
+ABACDA
+
+
+*/
+
+
+/*
+
+1
+9
+ABCDABBFC
+
+*/
