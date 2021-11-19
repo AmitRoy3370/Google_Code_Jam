@@ -1,0 +1,240 @@
+import java.util.Scanner;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.HashMap;
+
+public class Solution{
+    
+    static int testCases,n;
+    
+    static long a[];
+    
+    static Scanner in=new Scanner(System.in);
+    
+    static void solve(int testCases){
+        
+        System.out.print("Case #"+testCases+": ");
+        
+        long ans=0;
+        
+        //for the best cases
+        
+        if(n==2 || n==3 ){
+            
+            System.out.println(n);
+            
+            return;
+            
+        }
+        
+        Set<Long> set=new HashSet<>();
+        
+        for(int i=0;i<n-1;i++){
+            
+            set.add(Math.abs(a[i]-a[i+1]) );
+            
+        }
+        
+        if( set.size()==1 ){
+            
+            System.out.println(n);
+            
+            return;
+            
+        }
+        
+        //calculate the worst case's
+        
+       long differenceLeft[]=new long[n];
+        
+       long differenceRight[]=new long[n];
+        
+
+        for(int i=0;i<n;i++){
+            
+            differenceLeft[i]=Integer.MIN_VALUE;
+            differenceRight[i]=Integer.MIN_VALUE;
+            
+        }
+        
+        for(int i=1;i<n;i++){
+            
+            differenceLeft[i]=(a[i]-a[i-1]);
+            
+        }
+        
+        for(int i=n-2;i>=0;i--){
+            
+            differenceRight[i]=(a[i+1]-a[i]);
+            
+        }
+        
+        long prefix[]=new long[n];
+        long suffix[]=new long[n];
+        
+        for(int i=0;i<n;i++){
+            
+            prefix[i]=2;
+            suffix[i]=2;
+            
+        }
+        
+        prefix[0]=suffix[n-1]=1;
+        
+        for(int i=2;i<n;i++){
+            
+            if( differenceLeft[i]==differenceLeft[i-1] ){
+                
+               prefix[i]=1+prefix[i-1];
+                
+            }
+            
+        }
+        
+         for(int i=n-3;i>=0;i--){
+            
+            if( differenceRight[i]==differenceRight[i+1] ){
+                
+                suffix[i]=1+suffix[i+1];
+                
+            }
+            
+        }
+        
+      /*  System.out.println();
+        
+        for(long i: suffix){
+            
+            System.out.print(i+" ");
+            
+        }
+        
+        System.out.println();
+        
+        for(long i: prefix){
+            
+            System.out.print(i+" ");
+            
+        }
+        
+        System.out.println();
+        
+        for(long i: differenceLeft){
+            
+            System.out.print(i+" ");
+            
+        }
+        
+        System.out.println();
+        
+        for(long i: differenceRight){
+            
+            System.out.print(i+" ");
+            
+        }
+        
+        System.out.println();*/
+        
+        ans=Math.max(1+suffix[1],1+prefix[n-2] );
+        
+        for(int i=1;i<n-1;i++){
+            
+            ans=Math.max(ans,1+suffix[i+1] );
+            ans=Math.max(ans,1+prefix[i-1]);
+            
+            if( (a[i+1]-a[i-1])%2>=1 ){
+                
+                continue;
+                
+            }
+            
+            long difference=(a[i+1]-a[i-1])/2;
+            
+            if(i<2 || differenceLeft[i-1]==difference){
+                
+                ans=Math.max(ans,2+prefix[i-1]);
+                
+            }
+            
+            if(i>n-3 || differenceRight[i+1]==difference){
+                
+                ans=Math.max(ans,2+suffix[i+1]);
+                
+            }
+            
+            if( (i>1 && differenceLeft[i-1]!=difference ) || (i<n-2 && differenceRight[i+1]!=difference  ) ){
+                
+                continue;
+                
+            }
+            
+            ans=Math.max(ans, 1+suffix[i+1]+prefix[i-1] );
+            
+        }
+        
+        System.out.println(ans);
+        
+    }
+    
+    public static void main(String [] amit)
+    {
+        
+        testCases=in.nextInt();
+        
+        for(int t=1;t<=testCases;t++){
+            
+            n=in.nextInt();
+            
+           a=new long[n];
+            
+            for(int i=0;i<n;i++){
+                
+                a[i]=in.nextLong();
+                
+            }
+            
+            solve(t);
+            
+        }
+        
+    }
+    
+}
+
+/*
+
+3
+4
+9 7 5 3
+9
+5 5 4 5 5 5 4 5 6
+4
+8 5 2 0
+
+
+*/
+
+
+/*
+
+1
+5
+1 2 3 5 5
+
+*/
+
+
+/*
+
+4
+4
+9 7 5 3
+9
+5 5 4 5 5 5 4 5 6
+4
+8 5 2 0
+6
+1 2 3 5 5 5
+
+*/
