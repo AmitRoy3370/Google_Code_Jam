@@ -1,0 +1,61 @@
+import java.util.Scanner;
+import java.math.BigInteger;
+
+public class Solution{
+    
+    static int testCases;
+    
+    static String n;
+    
+    static Scanner in=new Scanner(System.in);
+    
+    static void solve(int testCases){
+        
+        String a,b;
+        
+        if(!String.valueOf(n).contains("4") ){
+            
+            a=n;
+            b="0";
+            
+        }else{
+            
+            char number[]=String.valueOf(n).toCharArray();
+            
+            int len=number.length;
+            
+            for(int i=0;i<len;i++){
+                
+                if(number[i]=='4') number[i]='3';
+                
+            }
+            
+            a=(new String(number) );
+            
+            BigInteger b1=new BigInteger(n);
+            
+            BigInteger b2=new BigInteger(a);
+            
+            b=(b1.subtract(b2)).toString();
+            
+        }
+        
+        System.out.println("Case #"+testCases+": "+a+" "+b);
+        
+    }
+    
+    public static void main(String [] amit){
+        
+        testCases=in.nextInt();
+        
+        for(int t=1;t<=testCases;t++){
+            
+            n=in.next();
+            
+            solve(t);
+            
+        }
+        
+    }
+    
+}
