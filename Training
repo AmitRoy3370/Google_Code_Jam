@@ -1,0 +1,124 @@
+import java.util.Scanner;
+
+public class Solution{
+    
+    static Scanner in=new Scanner(System.in);
+    
+    static int testCases,n,p;
+    
+    static long skill[];
+    
+    static void solve(int testCases){
+        
+        long ans=Long.MAX_VALUE;
+        
+        sort(skill,0,n-1);
+       
+        long dp[]=new long[n+1];
+        
+        for(int i=0;i<n;i++){
+            
+            dp[i+1]=dp[i]+skill[i];
+            
+        }
+        
+        for(int i=0;i+p<=n;i++ ){
+            
+            ans=Math.min(ans,p*skill[i+p-1]-dp[i+p]+dp[i] );
+            
+        }
+        
+        System.out.println("Case #"+testCases+": "+ans);
+        
+    }
+    
+    public static void main(String [] amit){
+        
+        testCases=in.nextInt();
+        
+        for(int t=1;t<=testCases;t++){
+            
+            n=in.nextInt();
+            p=in.nextInt();
+            
+            skill=new long[n];
+            
+            for(int i=0;i<n;i++)
+            {
+                
+                skill[i]=in.nextLong();
+                
+            }
+            
+            solve(t);
+            
+        }
+        
+    }
+    
+    static void sort(long a[],int left,int right){
+        
+        if(left>=right){
+            
+            return;
+            
+        }
+        
+        int mid=(left+right)/2;
+        
+        sort(a,left,mid);
+        sort(a,mid+1,right);
+        merge(a,left,right,mid);
+        
+    }
+    
+    static void merge(long a[],int left,int right,int mid){
+        
+        int n1=mid-left+1,n2=right-mid;
+        
+        long L[]=new long[n1];
+        long R[]=new long[n2];
+        
+        for(int i=0;i<n1;i++) L[i]=a[left+i];
+        
+        for(int i=0;i<n2;i++) R[i]=a[mid+1+i];
+        
+        int i=0,j=0,k=left;
+        
+        while(i<n1 && j<n2){
+            
+            if(L[i]<=R[j]){
+                
+                a[k]=L[i];
+                ++i;
+                
+            }else{
+                
+                a[k]=R[j];
+                ++j;
+                
+            }
+            
+            ++k;
+            
+        }
+        
+        while(i<n1){
+            
+            a[k]=L[i];
+            ++k;
+            ++i;
+            
+        }
+        
+        while(j<n2){
+            
+            a[k]=R[j];
+            ++k;
+            ++j;
+            
+        }
+        
+    }
+    
+}
