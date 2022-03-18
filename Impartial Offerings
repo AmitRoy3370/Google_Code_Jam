@@ -1,0 +1,129 @@
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class Solution {
+    
+    static Scanner in = new Scanner(System.in);
+    
+    static int testCases, n;
+    
+    static int a[];
+    
+    private static void solve(int testCases) {
+        
+        System.out.print("Case #" + testCases + ": ");
+        
+        int ans = 0;
+        
+        Arrays.sort(a);
+        
+        int treats = 1;
+        //int ans = 0;
+        
+        for(int i = 0; i < n; ++i) {
+            
+            int count = 1;
+            
+            while(i + 1 < n && a[i] == a[i + 1]) {
+                
+                ++count;
+                
+                ++i;
+                
+            }
+            
+            ans += count * treats;
+            
+            ++treats;
+            
+        }
+        
+        System.out.println(ans);
+        
+    }
+    
+    public static void main(String [] priya) {
+        
+        testCases = in.nextInt();
+        
+        for(int t = 0; t < testCases; ++t) {
+            
+            n = in.nextInt();
+            
+            a = new int[n];
+            
+            for(int i = 0; i < n; ++i) {
+                
+                a[i] = in.nextInt();
+                
+            }
+            
+            solve(t + 1);
+            
+        }
+        
+    }
+    
+    private static void swap(int a[], int left, int right) {
+        
+        int temp = a[left];
+        a[left] = a[right];
+        a[right] = temp;
+        
+    }
+    
+    private static void sort(int a[], int left, int right) {
+        
+        if(left >= right) {
+            
+            return;
+            
+        }
+        
+        int i = left, j = right;
+        
+        int mid = (left + right) / 2;
+        
+        int n = a.length;
+        
+        while(j >= i) {
+            
+            while(i < n && a[i] < a[mid]) {
+                
+                ++i;
+                
+            }
+            
+            while(j >= 0 && a[j] > a[mid]) {
+                
+                --j;
+                
+            }
+            
+            if(j >= i) {
+                
+                swap(a, i, j);
+                ++i;
+                --j;
+                
+            }
+            
+        }
+        
+        //swap(a, left, mid);
+        
+        if(left < j ) {
+            
+            sort(a, left, j);
+            
+        }
+        
+        if(i < right) {
+            
+            sort(a, i, right);
+            
+        }
+        
+    }
+    
+}
