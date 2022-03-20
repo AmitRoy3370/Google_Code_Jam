@@ -1,0 +1,119 @@
+
+import java.util.Scanner;
+import java.math.BigInteger;
+
+public class Solution extends Thread {
+
+    static Scanner in = new Scanner(System.in);
+
+    static int testCases, n;
+
+    static char a[];
+
+    static long digit_sum(BigInteger n) {
+
+        if (n.longValue() <= 0) {
+
+            return 0;
+
+        }
+
+        if (n.mod(new BigInteger("9")).longValue() == 0) {
+
+            return 9;
+
+        } else {
+
+            return n.mod(new BigInteger("9")).longValue();
+
+        }
+
+    }
+
+    static void solve(int testCases) {
+
+        System.out.print("Case #" + testCases + ": ");
+        
+        long sum = 0;
+        
+        for(char i : a) {
+            
+            sum += i - '0';
+            
+        }
+        
+        String ans = null;
+        
+        if(sum % 9 == 0) {
+            
+            ans = new String(a).substring(0, 1) + '0' + new String(a).substring(1, n);
+            
+            System.out.println(ans);
+            
+            return;
+            
+        }
+        
+        //String ans = null;
+        
+        long nxt = sum / 9;
+        ++nxt;
+        
+        long to_add = nxt * 9 - sum;
+        
+        for(int i = 0; i < n; ++i) {
+            
+            if(to_add < a[i] - '0' ) {
+                
+                ans = new String(a).substring(0, i) + (to_add) + new String(a).substring(i, n);
+                
+                break;
+            
+            }
+            
+        }
+        
+        //System.out.println(ans + " " + to_add);
+        
+        if(ans == null) {
+            
+            ans = new String(a) + to_add;
+            
+        }
+        
+        if(ans.length() == n ) {
+            
+            System.out.println(ans + "0");
+            
+        } else {
+            
+            System.out.println(ans);
+            
+        }
+
+    }
+
+    @Override
+    public void run() {
+
+        testCases = in.nextInt();
+
+        for (int t = 0; t < testCases; ++t) {
+
+            a = in.next().toCharArray();
+
+            n = a.length;
+
+            solve(t + 1);
+
+        }
+
+    }
+
+    public static void main(String[] amit) {
+
+        new Thread(null, new Solution(), "Main", 1 << 28).start();
+
+    }
+
+}
