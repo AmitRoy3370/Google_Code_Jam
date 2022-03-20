@@ -1,0 +1,121 @@
+
+import java.util.Scanner;
+
+public class Solution {
+
+    static Scanner in = new Scanner(System.in);
+
+    static int testCases, n, m;
+
+    static char a[], b[];
+
+    static void solve(int testCases) {
+
+        System.out.print("Case #" + testCases + ": ");
+
+        int i = 0;
+        int j = 0;
+        int count = 0;
+
+        while (j < m
+                && i < n) {
+
+            if (a[i] == b[j]) {
+
+                ++i;
+
+            } else {
+
+                count++;
+
+            }
+
+            j++;
+
+        }
+
+        if (i == n) {
+
+            System.out.println(count + m - j);
+
+        } else {
+
+            System.out.println("IMPOSSIBLE");
+
+        }
+
+        /*Map<Character, Integer> mapA = new HashMap<>();
+
+        Map<Character, Integer> mapB = new HashMap<>();
+
+        char ch[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+
+        for (int i = 0; i < 52; ++i) {
+
+            mapA.put(ch[i], 0);
+            mapB.put(ch[i], 0);
+
+        }
+
+        for (char i : a) {
+
+            mapA.put(i, mapA.getOrDefault(i, 0) + 1);
+
+        }
+
+        for (char j : b) {
+
+            mapB.put(j, mapB.getOrDefault(j, 0) + 1);
+
+        }
+
+        int count = 0;
+
+        for (int i = 0; i < 52; ++i) {
+
+            if (!Objects.equals(mapA.get(ch[i]), mapB.get(ch[i]))) {
+
+                count += Math.abs(mapA.get(ch[i]) - mapB.get(ch[i]));
+
+            }
+
+            if (mapA.get(ch[i]) == 0 && mapB.get(ch[i]) != 0) {
+
+                System.out.println("IMPOSSIBLE");
+                return;
+
+            }
+
+        }*/
+        //System.out.println();
+    }
+
+    public static void main(String[] amit) {
+
+        testCases = in.nextInt();
+
+        for (int t = 0; t < testCases; ++t) {
+
+            a = in.next().toCharArray();
+
+            b = in.next().toCharArray();
+
+            n = a.length;
+
+            m = b.length;
+
+            solve(t + 1);
+
+        }
+
+    }
+
+}
+/*
+
+1
+Hdhduejsndjiskd
+Hdddhduejjjjsndjjjiskb
+
+
+ */
