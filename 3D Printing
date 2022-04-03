@@ -1,0 +1,161 @@
+import java.util.Scanner;
+
+public class Solution {
+    
+    static Scanner in = new Scanner(System.in);
+    
+    static int testCases;
+    
+    static long c[], m[], y[], k[];
+    
+    static void solve(int testCases) {
+        
+        System.out.print("Case #" + testCases + ": ");
+        
+        long sum = 0;
+        
+        long min = c[0];
+        
+        for(long i : c) {
+            
+            min = Math.min(i, min);
+            
+        }
+        
+        long minC = min;
+        
+        sum += min;
+        
+        min = m[0];
+        
+        for(long i : m) {
+            
+            min = Math.min(i, min);
+            
+        }
+        
+        long minM = min;
+        
+        sum += min;
+        
+        min = y[0];
+        
+        for(long i : y) {
+            
+            min = Math.min(i, min);
+            
+        }
+        
+        long minY = min;
+        
+        sum += min;
+        
+        min = k[0];
+        
+        for(long i : k) {
+            
+            min = Math.min(i, min);
+            
+        }
+        
+        long minK = min;
+        
+        sum += min;
+        
+        if(sum < (long)(1e6) ) {
+            
+            System.out.println("IMPOSSIBLE");
+            return;
+            
+        }
+        
+        long extra = sum - (long)(1e6);
+        
+        if(extra == 0) {
+            
+            System.out.println(minC + " " + minM + " " + minY + " " + minK);
+            return;
+            
+        }
+        
+         if(minC >= extra) {
+                    
+                    minC -= extra;
+                    extra = 0;
+                
+             
+         } else {
+                    
+                    extra -= minC;
+                    minC = 0;
+                
+                }
+                
+                if(minM >= extra) {
+                    
+                    minM -= extra;
+                    extra = 0;
+                
+                    
+                } else {
+                    
+                    extra -= minM;
+                    minM = 0;
+                
+                }
+                
+                if(minY >= extra) {
+                    
+                    minY -= extra;
+                    extra = 0;
+                
+                } else {
+                    
+                    extra -= minY;
+                    minY = 0;
+                
+                }
+                
+                if(minK >= extra) {
+                    
+                    minK -= extra;
+                    extra = 0;
+                
+                } else {
+                    
+                    extra -= minK;
+                    minK = 0;
+                
+                }
+
+        System.out.println(minC + " " + minM + " " + minY + " " + minK);
+        
+    }
+    
+    public static void main(String [] amit) {
+        
+        testCases = in.nextInt();
+        
+        for(int t = 1; t <= testCases; ++t) {
+            
+            c = new long[3];
+            m = new long[3];
+            y = new long[3];
+            k = new long[3];
+            
+            for(int i = 0; i < 3; ++i) {
+                
+                c[i] = in.nextLong();
+                m[i] = in.nextLong();
+                y[i] = in.nextLong();
+                k[i] = in.nextLong();
+                
+            }
+            
+            solve(t);
+            
+        }
+        
+    }
+    
+}
