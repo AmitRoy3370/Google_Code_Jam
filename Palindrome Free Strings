@@ -1,0 +1,292 @@
+import java.util.Scanner;
+
+public class Solution {
+    
+    private static Scanner in = new Scanner(System.in);
+    
+    private static int testCases, n;
+    
+    private static char a[];
+    
+    private static boolean pal5[], pal6[];
+    
+    private static void solve(int testCases) {
+        
+		/*for(char i : a) {
+			
+			if(i == ' ') {
+				
+				System.out.print("space ");
+				
+			} else {
+				
+				System.out.print(i + " ");
+				
+			}
+			
+		}
+		
+		System.out.println();*/
+		
+        pal5 = new boolean[33];
+        pal6 = new boolean[65];
+        
+        pal5();
+        
+        pal6();
+        
+		/*for(boolean i : pal5) {
+			
+			System.out.print(i + " ");
+			
+		}
+		
+		System.out.println();
+		
+		for(boolean i : pal6) {
+			
+			System.out.print(i + " ");
+			
+		}
+		
+		System.out.println();*/
+		
+        System.out.print("Case #" + testCases + ": ");
+        
+        String ans = "IMPOSSIBLE";
+        
+        if(n <= 4) {
+            
+            System.out.println("POSSIBLE");
+            return;
+            
+        }
+        
+        boolean dp[][] = new boolean[n + 1][32];
+        
+        dp[0][0] = true;
+        
+        for(int i = 0; i < n; ++i) {
+            
+            for(int j = 0; j < 32; ++j) {
+                
+                if(dp[i][j]) {
+                    
+                    if((a[i + 1] == '1' || a[i + 1] == '?')) {
+                        
+                        int valid = 0;
+                        
+                        if(i >= 4 && pal5[(j * 2 + 1) % 32]) {
+                            
+                            valid = 1;
+                            
+                        }
+                        
+                        if(i >= 5 && pal6[j * 2 + 1]) {
+                            
+                            valid = 1;
+                            
+                        }
+                        
+                        if(valid == 0) {
+                            
+                            dp[i + 1][(j * 2 + 1) % 32] = true; 
+                            //System.out.println("here 1 " + i);
+                        }
+                        
+                    }
+                    
+                    if(a[i + 1] == '0' || a[i + 1] == '?') {
+                        
+                        int valid = 0;
+                        
+                        if(i >= 4 && pal5[(j * 2) % 32]) {
+                            
+                            valid = 1;
+                            
+                        }
+                        
+                        if(i >= 5 && pal6[j * 2]) {
+                            
+                            valid = 1;
+                            
+                        }
+                        
+                        if(valid == 0) {
+                            
+                            dp[i + 1][(j * 2) % 32] = true;
+                            //System.out.println("here 0 " + i);
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+        for(int i = 0; i < 32; ++i) {
+            
+            if(dp[n][i]) {
+                
+                ans = "POSSIBLE";
+                break;
+                
+            }
+            
+        }
+        
+        System.out.println(ans);
+        
+        /*for(boolean i[] : dp) {
+            
+            for(boolean j : i) {
+                
+                System.out.print(j +" ");
+                
+            }
+            
+            System.out.println();
+            
+        }*/
+        
+    }
+    
+    public static void main(String [] amit) {
+        
+        testCases = in.nextInt();
+        
+        for(int t = 0; t < testCases; ++t) {
+            
+            n = in.nextInt();
+            
+            a = (" " + in.next()).toCharArray();
+            
+            solve(t + 1);
+            
+        }
+        
+    }
+    
+    static void pal5() {
+        
+        for(int i = 0; i < 32; ++i) {
+            
+            int len = i, charOne = 0, charTwo = 0, charThree = 0, charFour = 0, charFive = 0;
+            
+            if(len >= 16) {
+                
+                len -= 16;
+                
+                charOne = 1;
+                
+            }
+            
+            if(len >= 8) {
+                
+                len -= 8;
+                
+                charTwo = 1;
+                
+            }
+            
+            if(len >= 4) {
+                
+                len -= 4;
+                
+                charThree = 1;
+                
+            }
+            
+            if(len >= 2) {
+                
+                len -= 2;
+                
+                charFour = 1;
+                
+            }
+            
+            if(len >= 1) {
+                
+                --len;
+                
+                charFive = 1;
+                
+            }
+            
+            if(charOne == charFive && charTwo == charFour) {
+                
+                pal5[i] = true;
+                
+            }
+            
+        }
+        
+    }
+    
+    static void pal6() {
+        
+        for(int i = 0; i < 64; ++i) {
+            
+            int len = i, charSix = 0 ,charOne = 0, charTwo = 0, charThree = 0, charFour = 0, charFive = 0;
+            
+            if(len >= 32) {
+                
+                len -= 32;
+                
+                charOne = 1;
+                
+            }
+            
+            if(len >= 16) {
+                
+                len -= 16;
+                
+                charTwo = 1;
+                
+            }
+            
+            if(len >= 8) {
+                
+                len -= 8;
+                
+                charThree = 1;
+                
+            }
+            
+            if(len >= 4) {
+                
+                len -= 4;
+                
+                charFour = 1;
+                
+            }
+            
+            if(len >= 2) {
+                
+                len -= 2;
+                
+                charFive = 1;
+                
+            }
+            
+            if(len >= 1) {
+                
+                len--;
+                
+                charSix = 1;
+                
+            }
+            
+            if(charOne == charSix && charTwo == charFive && charThree == charFour) {
+                
+                pal6[i] = true;
+                
+            }
+            
+        }
+        
+    }
+    
+}
