@@ -1,0 +1,222 @@
+import java.util.Scanner;
+//import java.util.PriorityQueue;
+
+public class Solution {
+    
+    static Scanner in = new Scanner(System.in);
+    
+    static int testCases, n;
+    
+    static char a[];
+    
+    static Stack<Character> stack;
+    
+    static void solve(int t) {
+        
+        System.out.print("Case #" + t + ": ");
+        
+        StringBuilder ans = new StringBuilder();
+        
+        stack = new Stack<>();
+        
+        for(int i = 0; i < n; ++i) {
+            
+            if(stack.isEmpty()) {
+                
+                stack.push(a[i]);
+                
+                //stack.print();
+                
+            } else {
+                
+                char y = stack.top();
+                
+                if(y == a[i]) {
+                    
+                    stack.push(a[i]);
+                    
+                } else if(a[i] > y) {
+                    
+                    while(!stack.isEmpty()) {
+                        
+                        Character f = stack.pop();
+                        
+                        ans.append(f).append(f );
+                        
+                        //stack.pop();
+                        
+                    }
+                    
+                    stack.push(a[i]);
+                    
+                } else {
+                    
+                    while(!stack.isEmpty()) {
+                        
+                      try {    
+                        
+                        ans.append(stack.pop() );
+                        
+                      } catch(Exception e) {
+                          
+                          break;
+                          
+                      }
+                        
+                        //stack.pop();
+                        
+                    }
+                    
+                    stack.push(a[i]);
+                    
+                    //System.out.println(stack.size() );
+                    
+                }
+                
+            }
+            
+        }
+        
+        while(!stack.isEmpty()) {
+            
+            ans.append(stack.pop() );
+            
+        }
+        
+        System.out.println(ans.toString() );
+        
+    }
+    
+    public static void main(String [] amit) {
+        
+        testCases = in.nextInt();
+        
+        for(int t = 0; t < testCases; ++t) {
+            
+            a = in.next().toCharArray();
+            
+            n = a.length;
+            
+            solve(t + 1);
+            
+        }
+        
+    }
+    
+    static class Node<T> {
+        
+        T data;
+        Node<T> next;
+        
+        public Node() {
+            
+            
+        }
+        
+        public Node(T data) {
+            
+            this.data = data;
+            this.next = null;
+    
+        }
+        
+    }
+    
+    static class Stack<T> {
+        
+        int len;
+        
+        Node<T> node;
+        
+        public Stack() {
+            
+            this.node = null;
+            len = 0;
+            
+        }
+        
+        int size() {
+            
+            return len;
+            
+        }
+        
+        boolean isEmpty() {
+            
+            return size() == 0;
+            
+        }
+        
+        void push(T data) {
+            
+            //++len;
+            
+            Node<T> newNode = new Node<>(data);
+            
+            if(isEmpty()) {
+                
+                this.node = newNode;
+                
+                ++len;
+                
+                return;
+                
+            }
+            
+            newNode.next = node;
+            
+            node = newNode;
+            
+            ++len;
+            
+        }
+        
+        T top() {
+           
+            if(isEmpty() ) {
+                
+                throw new ArrayIndexOutOfBoundsException();
+                
+            } 
+            
+            return node.data;
+            
+        }
+        
+        void print() {
+            
+            Node<T> r = node;
+            
+            while(r != null) {
+                
+                System.out.print(r.data + " ");
+                
+                r = r.next;
+                
+            }
+            
+            System.out.println();
+            
+        }
+        
+        T pop() {
+            
+            if(isEmpty()) {
+                
+                throw new ArrayIndexOutOfBoundsException();
+                
+            }
+            
+            T data = top();
+            
+            node = node.next;
+            
+            --len;
+            
+            return data;
+            
+        }
+        
+    }
+    
+}
