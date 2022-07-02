@@ -1,0 +1,75 @@
+import java.util.Scanner;
+
+public class Solution {
+    
+    static int testCases, n;
+    
+    static long a[];
+    
+    static StringBuilder ans = new StringBuilder();
+    
+    static Scanner in = new Scanner(System.in);
+    
+    static void solve(int t) {
+        
+        ans.append("Case #").append(t).append(": ");
+        
+        int maxLen = 0;
+        
+        for(int i = 0; i < n - 1;) {
+            
+            int j = i, len = 0;
+            
+            long diff = a[i + 1] - a[i];
+            
+            while(j + 1 < n && a[j + 1] - a[j] == diff) {
+                
+                ++len;
+                
+                ++j;
+                
+            }
+            
+            len = j - i + 1;
+            
+            maxLen = Math.max(maxLen, len);
+            
+            i = Math.max(i + 1, j);
+            
+        }
+        
+        ans.append(maxLen);
+        
+        if(t != testCases) {
+            
+            ans.append("\n");
+            
+        }
+        
+    }
+    
+    public static void main(String [] amit) {
+        
+        testCases = in.nextInt();
+        
+        for(int t = 0; t < testCases; ++t) {
+            
+            n = in.nextInt();
+            
+            a = new long[n];
+            
+            for(int i = 0; i < n; ++i) {
+                
+                a[i] = in.nextLong();
+                
+            }
+            
+            solve(t + 1);
+            
+        }
+        
+        System.out.print(ans.toString());
+        
+    }
+    
+}
