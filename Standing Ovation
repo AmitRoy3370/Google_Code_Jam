@@ -1,0 +1,66 @@
+import java.util.Scanner;
+
+public class Solution {
+    
+    static Scanner in = new Scanner(System.in);
+    
+    static StringBuilder ans = new StringBuilder();
+    
+    static int testCases, n;
+    
+    static char a[];
+    
+    static void solve(int t) {
+        
+        ans.append("Case #" + t + ": ");
+        
+        int finalAns = 0, standing = 0;
+        
+        for(int i = 0; i < n; ++i) {
+            
+            int number = a[i] - '0';
+            
+            if(number != 0) {
+                
+                if(i > standing) {
+                    
+                    finalAns += i - standing;
+                    standing += i - standing;
+                    
+                }
+                
+            }
+            
+            standing += number;
+            
+        }
+        
+        ans.append(finalAns);
+        
+        if(t != testCases) {
+            
+            ans.append("\n");
+            
+        }
+        
+    }
+    
+    public static void main(String [] amit) {
+        
+        testCases = in.nextInt();
+        
+        for(int t = 0; t < testCases; ++t) {
+            
+            n = in.nextInt() + 1;
+            
+            a = in.next().toCharArray();
+            
+            solve(t + 1);
+            
+        }
+        
+        System.out.print(ans.toString());
+        
+    }
+    
+}
