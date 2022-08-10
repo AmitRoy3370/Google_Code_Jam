@@ -1,0 +1,127 @@
+import java.util.Scanner;
+
+public class Solution {
+    
+    static Scanner in = new Scanner(System.in);
+    
+    static int testCases, n;
+    
+    static long a[];
+    
+    static StringBuilder ans = new StringBuilder();
+    
+    /*
+    *
+    * * 1 2 1 2
+    *
+    * - 0 1 0 1 -> eat pancakes at minuite 1
+    * - 0 0 0 0 -> eat pancake at minuite 2
+    *
+    * * total two minute it takes to complete the 
+    *   dinner
+    *
+    * * 3
+    *  
+    * - 2
+    * - 1 1 -> split the pancakes at minuit 1
+    * - 0 0 -> eat pancak at minuite 2 
+    *
+    * * total three minute to complete the dinner
+    *
+    * * 4
+    *
+    * - 2 2 -> no it but split the plate into
+    *          two part
+    * - 1 1 -> 1 min to eat the dinner  
+    *
+    * - 0 0 -> 1 min take to eat the dinner
+    *
+    *
+    * * takes total three minute to eat the dinner
+    *
+    *
+    * * 2 3 4 5 1 2 3 3
+    *
+    * - 2 3 4 4 1 1 2 3 3 -> split 5 into the two 
+    *         - -            part
+    * - 1 2 3 3 0 0 1 2 2 -> eat at minuite 2
+    * - 0 1 2 2 0 0 0 1 1 -> eat at minuite 3
+    * - 0 0 1 1 0 0 0 0 0 -> eat at minuite 4
+    * - 0 0 0 0 0 0 0 0 0 -> eat at minuite 5
+    *
+    * * it takes total 5 minuite to eat the dinner
+    *
+    *
+    * * We can devide the max number into various
+    * * partion till 1 to full max size. This max
+    * * number will be our maximum possible movement
+    * * performed by us.
+    *
+    *
+    */
+    
+    static void solve(int t) {
+        
+        ans.append("Case #" + t + ": ");
+        
+        long finalAns = 0L;
+        
+        long max = max(a);
+        
+        finalAns = max;
+        
+        long copy_max = max, total_move = 0L;
+        
+        while(max >= 1L) {
+            
+            total_move = 0L;
+            
+            for(long i : a) {
+                
+                total_move += (i - 1L) / max;
+                
+            }
+            
+            finalAns = Math.min(finalAns, total_move + max);
+            
+            --max;
+            
+        }
+        
+        ans.append(finalAns);
+        
+        if(t != testCases) ans.append("\n");
+    
+    }
+    
+    public static void main(String [] amit) {
+        
+        testCases = in.nextInt();
+        
+        for(int t = 0; t < testCases; ++t) {
+            
+            n = in.nextInt();
+            
+            a = new long[n];
+            
+            for(int i = 0; i < n; ++i) a[i] = in.nextLong();
+            
+            solve(t + 1);
+            
+        }
+        
+        System.out.print(ans.toString());
+        
+    }
+    
+    static long max(long a[]) {
+        
+        long max = a[0];
+        
+        for(long i : a) max = Math.max(max, i);
+        
+        return max;
+        
+    }
+    
+}
