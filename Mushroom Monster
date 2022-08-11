@@ -1,0 +1,103 @@
+import java.util.Scanner;
+
+public class Solution {
+    
+    static Scanner in = new Scanner(System.in);
+    
+    static StringBuilder ans = new StringBuilder();
+    
+    static int testCases, n;
+    
+    static long a[];
+    
+    /*
+    **
+    *  10 5 15  5
+    * -  5    10 -> we can understand that we will
+    *               eat when we can see that the 
+    *               number of mushroom is decreasing
+    *               so as we can eat any mashroom
+    *               at any number of time, we have
+    *               to just calculate the number of
+    *               the summation of the positve 
+    *               difference where a[i] > a[i + 1]
+    * -  10 5 10 -> Here the max eating diff is 10
+    *               as we have to eat a constraint 
+    *               rate. So always we try to keep
+    *               this range at a constraint range
+    *               So always we take minimum of the
+    *               maxdiff and the present element.
+    **
+    */
+    
+    static void solve(int t) {
+        
+       ans.append("Case #" + t + ": ");
+       
+       long first_method = 0, second_method = 0;
+       
+       for(int i = 0; i < n - 1; i++) {
+           
+           if(a[i + 1] < a[i]) {
+               
+               first_method += a[i] - a[i + 1];
+               
+           }
+           
+       }
+       
+       long max_diff = Long.MIN_VALUE;
+       
+       for(int i = 0; i < n - 1; ++i) max_diff = Math.max(max_diff, a[i] - a[i + 1]);
+       
+       for(int i = 0; i < n - 1; ++i) second_method += Math.min(max_diff, a[i]);
+       
+       ans.append(first_method).append(" ").append(second_method);
+        
+       if(t != testCases) {
+           
+           ans.append("\n");
+           
+       }
+        
+    }
+    
+    public static void main(String [] amit) {
+        
+        testCases = in.nextInt();
+        
+        for(int t = 0; t < testCases; ++t) {
+            
+            n = in.nextInt();
+            
+            a = new long[n];
+            
+            for(int i = 0; i < n; ++i) {
+                
+                a[i] = in.nextLong();
+                
+            }
+            
+            solve(t + 1);
+            
+        }
+        
+        System.out.print(ans.toString());
+        
+    }
+    
+    long max(long a[]) {
+        
+        long max = a[0];
+        
+        for(long i : a) {
+            
+            max = Math.max(i, max);
+            
+        }
+        
+        return max;
+        
+    }
+    
+}
